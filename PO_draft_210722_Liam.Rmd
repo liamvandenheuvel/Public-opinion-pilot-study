@@ -1,0 +1,1898 @@
+---
+title             : "Public opinion in the Netherlands on selective reporting, publication bias, and lack of data sharing in psychological science"
+shorttitle        : "PUBLIC OPINION SCIENTIFIC SELECTIVITY"
+author: 
+  - name          : "Anna E. van 't Veer"
+    affiliation   : "1"
+    corresponding : yes    
+    address       : "Faculty of Social Sciences"
+    email         : "a.e.van.t.veer@fsw.leidenuniv.nl"
+  - name          : "Maaike L. Verburg"
+    affiliation   : "2"
+  - name          : "Daniel Lakens"
+    affiliation   : "3"
+affiliation:
+  - id            : "1"
+    institution   : "Methodology and Statistics Unit, Psychology institute, Leiden University, ORCID: https://orcid.org/0000-0002-2733-1841"
+  - id            : "2"
+    institution   : "ORCID: https://orcid.org/0000-0001-9408-3190"
+  - id            : "3"
+    institution   : "Dept. Industrial Engineering & Innovation Sciences, Eindhoven University of Technology, ORCID: https://orcid.org/0000-0002-0247-239X"
+authornote: |
+  Contributor roles: Conceptualization: . Data curation: . Formal Analysis: . Funding acquisition: . Investigation: . Methodology: . Project administration: . Resources: . Software: . Supervision: . Validation: . Visualization: . Writing – original draft: . Writing – review & editing: .
+  Enter author note here.
+abstract: |
+  In psychological science, as in other fields, several research practices underlie issues with the reliability and integrity of the knowledge produced. In order to further the debate surrounding the integrity of these practices, the opinion of members of the general public should be taken into account, as the public arguably has the largest interest in-and right to- the knowledge shared by scientists. In the current study, we assess the opinion of 200 members of the Dutch public, of which 114 conformed to preregistered inclusion rules, about three research reporting practices, namely selective reporting, publication bias, and lack of data sharing, both before and after carefully explaining the incentive structure in science that leads researchers to perform these practices. Results suggest that whereas participants had a reasonable amount of trust in knowledge coming from psychological science, all three research reporting practices were judged to be morally unacceptable. Participants guessed the prevalence of these practices to be a lot lower than they actually are, and upon learning the actual prevalence of these practices, judged the prevalence to be unacceptable as well. Responsibility for resolving these practices was placed equally on universities, journals, scientists and governments for selective report, on journals for publication bias and on scientists for the lack of data sharing. These findings can help work towards engaging the public not only in the visible outer layer of science but, perhaps more importantly, in the practices leading up to it. 
+  
+keywords          : "Public opinion, psychological science, selective reporting, publication bias,                      data sharing, [add any other keywords]"
+wordcount         : "`r stringr::str_count(rmarkdown::metadata$abstract, '\\S+')`"
+bibliography      : ["r-references.bib"]
+floatsintext      : yes
+figurelist        : no
+tablelist         : no
+footnotelist      : no
+linenumbers       : no
+mask              : no
+draft             : no
+  - |
+    \makeatletter
+    \renewcommand{\paragraph}{\@startsection{paragraph}{4}{\parindent}%
+      {0\baselineskip \@plus 0.2ex \@minus 0.2ex}%
+      {-1em}%
+      {\normalfont\normalsize\bfseries\typesectitle}}
+    
+    \renewcommand{\subparagraph}[1]{\@startsection{subparagraph}{5}{1em}%
+      {0\baselineskip \@plus 0.2ex \@minus 0.2ex}%
+      {-\z@\relax}%
+      {\normalfont\normalsize\bfseries\itshape\hspace{\parindent}{#1}\textit{\addperi}}{\relax}}
+    \makeatother
+csl               : "`r system.file('rmd', 'apa7.csl', package = 'papaja')`"
+documentclass     : "apa7"
+classoption       : "man"
+output            : papaja::apa6_pdf
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r, include=FALSE}
+options(tinytex.verbose = TRUE)
+```
+
+```{r, installing packages, include = FALSE, echo = TRUE, message=FALSE}
+
+###################START###################
+
+## Load all packages and install them if needed
+## Note: if you need to install papaja, update CRAN-packages only (option 2)
+
+if (!require("remotes")) {
+  install.packages("remotes", repos = "http://cran.us.r-project.org")
+  library("remotes")
+}
+if (!require("devtools")) {
+  install.packages("devtools", repos = "http://cran.us.r-project.org")
+  library("devtools")
+}
+if (!require("scales")) {
+  install.packages("scales", repos = "http://cran.us.r-project.org")
+  library("scales")
+}
+if (!require("papaja")) {
+  install_github("https://github.com/crsh/papaja")
+  library("papaja")
+}
+if (!require("tidyverse")) {
+  install.packages("tidyverse", repos = 'http://cran.us.r-project.org')
+  library("tidyverse")
+}
+if (!require("skimr")) {
+  install.packages("skimr", repos = "http://cran.us.r-project.org")
+  library("skimr")
+}
+if (!require("psych")) {
+  install.packages("psych", repos = "http://cran.us.r-project.org")
+  library("psych")
+}
+if (!require("reshape2")) {
+  install.packages("reshape2", repos = "http://cran.us.r-project.org")
+  library("reshape2")
+}
+if (!require("rstatix")) {
+  install.packages("rstatix", repos = "http://cran.us.r-project.org")
+  library("rstatix")
+}
+if (!require("ggridges")) {
+  install.packages("ggridges", repos = "http://cran.us.r-project.org")
+  library("ggridges")
+}
+if (!require("cowplot")) {
+  install.packages("cowplot", repos = "http://cran.us.r-project.org")
+  library("cowplot")
+}
+if (!require("ggpubr")) {
+  install.packages("ggpubr", repos = "http://cran.us.r-project.org")
+  library("ggpubr")
+}
+if (!require("ggstatsplot")) {
+  install.packages("ggstatsplot", repos = "http://cran.us.r-project.org")
+  library("ggstatsplot")
+}
+if (!require("tidystats")) {
+  install.packages("tidystats", repos = "http://cran.us.r-project.org")
+  library("tidystats")
+}
+if (!require("ggvenn")) {
+  install.packages("ggvenn", repos = "http://cran.us.r-project.org")
+  library("ggvenn")
+}
+if (!require("gridExtra")) {
+  install.packages("gridExtra", repos = "http://cran.us.r-project.org")
+  library("gridExtra")
+}
+if (!require("dplyr")) {
+  install.packages("dplyr", repos = "http://cran.us.r-project.org")
+  library("dplyr")
+}
+if (!require("forcats")) {
+  install.packages("forcats", repos = "http://cran.us.r-project.org")
+  library("forcats")
+}
+if (!require("UpSetR")) {
+  install.packages("UpSetR", repos = "http://cran.us.r-project.org")
+  library("UpSetR")
+}
+if (!require("ggpubr")) {
+  install.packages("ggpubr", repos = "http://cran.us.r-project.org")
+  library("ggpubr")
+}
+if (!require("ggiraph")) {
+  install.packages("ggiraph", repos = "http://cran.us.r-project.org")
+  library("ggiraph")
+}
+if (!require("ggiraphExtra")) {
+  install.packages("ggiraphExtra", repos = "http://cran.us.r-project.org")
+  library("ggiraphExtra")
+}
+if (!require("ggcorrplot")) {
+  install.packages("ggcorrplot")
+  library("ggcorrplot")
+}
+if (!require("corx")) {
+  install.packages("corx")
+  library("corx")
+}
+if (!require("memoise")) {
+  install.packages("memoise")
+  library("memoise")
+}
+```
+
+```{r}
+
+#References
+r_refs("r-references.bib") 
+
+# set seed
+set.seed(20211502)
+```
+
+```{r, data cleaning, include = FALSE, echo = TRUE, message=FALSE}
+# Read in data. And remember to knit twice for cached objects
+setwd("C:/Users/liamv/Desktop/School/Master Methodology & Statistics in Psychology/Blok 3/Internship")
+file.name <- "170920_raw_initial_sample.csv"
+data.raw <- read_csv(file.name)
+
+# Clean the data
+data.clean <- data.raw %>%
+  # Rename columns
+  rename(
+    start.date = StartDate,
+    end.date = EndDate,
+    status = Status,
+    progress = Progress,
+    duration.sec = `Duration (in seconds)`,
+    finished = Finished,
+    recorded.date = RecordedDate,
+    response.id = ResponseId,
+    distribution.channel = DistributionChannel,
+    user.language = UserLanguage,
+    permission = Q1.3,
+    prolific.id = Q54,
+    knowledge.trust.pre = Q3.1_1,
+    psychology.familiar = Q3.2_1,
+    psychology.familiar.choices = Q3.3,
+    psychology.familiar.open = Q3.3_5_TEXT,
+    scenario1.selective.reporting = Q4.3,
+    scenario2.selective.reporting = Q4.5,
+    acceptability.selective.reporting.pre = Q4.6_1,
+    prevalence.estimate.selective.reporting = Q4.7_1,
+    prevalence.acceptable.selective.reporting = Q4.9_1,
+    scenario1.publication.bias = Q5.3,
+    scenario2.publication.bias = Q5.5,
+    acceptability.publication.bias.pre = Q5.6_1,
+    prevalence.estimate.publication.bias = Q5.7_1,
+    prevalence.acceptable.publication.bias = Q5.9_1,
+    scenario.no.data = Q6.3,
+    acceptability.no.data.pre = Q6.4_1,
+    prevalence.estimate.no.data = Q6.5_1,
+    prevalence.acceptable.no.data = Q6.7_1,
+    click.first = `Q7.2_First Click`,
+    click.last = `Q7.2_Last Click`,
+    click.submit = `Q7.2_Page Submit`,
+    click.count = `Q7.2_Click Count`,
+    surprised.incentive.struc = Q8.1_1,
+    understanding.selective.reporting.post = Q9.2_1,
+    acceptability.selective.reporting.post = Q9.3_1,
+    responsibility.government.selective.reporting = Q9.4_1,
+    responsibility.journal.selective.reporting = Q9.4_2,
+    responsibility.university.selective.reporting = Q9.4_3,
+    responsibility.scientist.selective.reporting = Q9.4_4,
+    understanding.publication.bias.post = Q10.2_1,
+    acceptability.publication.bias.post = Q10.3_1,
+    responsibility.government.publication.bias = Q10.4_1,
+    responsibility.journal.publication.bias = Q10.4_2,
+    responsibility.university.publication.bias = Q10.4_3,
+    responsibility.scientist.publication.bias = Q10.4_4,
+    understanding.no.data.post = Q11.2_1,
+    acceptability.no.data.post = Q11.3_1,
+    responsibility.government.no.data = Q11.4_1,
+    responsibility.journal.no.data = Q11.4_2,
+    responsibility.university.no.data = Q11.4_3,
+    responsibility.scientist.no.data = Q11.4_4,
+    difficult.responsibility = Q12.1_1,
+    knowledge.trust.post = Q12.3_1,
+    cut.taxes.problems.not.solved = Q12.4_1,
+    education.choice = Q12.5,
+    education.open = Q12.5_5_TEXT,
+    remarks = Q12.6,
+    prolific.pid = PROLIFIC_PID
+  ) %>%
+  # Remove first two rows that not contain any information
+  slice(3:n()) %>%
+  # Change type of variable (numeric)
+  mutate_at(
+    vars(
+      progress,
+      duration.sec,
+      knowledge.trust.pre,
+      psychology.familiar,
+      click.first,
+      click.last,
+      click.submit,
+      click.count,
+      surprised.incentive.struc,
+      starts_with("responsibility"),
+      starts_with("acceptability"),
+      starts_with("prevalence"),
+      starts_with("understanding"),
+      difficult.responsibility,
+      knowledge.trust.post,
+      cut.taxes.problems.not.solved
+    ),
+    as.numeric
+  ) %>%
+  # Remove duplicate variables
+  #select(-prolific.id) %>%
+  # Change type of variable (datetime / dttm)
+  mutate_at(vars(ends_with("date")), as.POSIXct) %>%
+  # Change type of scenario variable (boolean)
+  mutate_at(vars(starts_with("scenario")), list(~ . == "ja")) %>%
+  # Change type of permission variable (boolean)
+  mutate_at(
+    vars(permission),
+    list(~ . == "ik geef toestemming om deel te nemen aan dit onderzoek.")
+  ) %>%
+  # Change type of finished variable (boolean)
+  mutate_at(vars(finished), list(~ . == "True")) %>%
+  # Filter objects that (1) finished survey (2) gave permission (3) after 15 sept
+  filter(finished & permission & start.date >= "2020-09-16 00:00:00 CEST")
+
+#Define corrected alpha-level as proposed by Good (1982)
+alpha.level <- 0.035
+```
+
+```{r, filter initial data, include = FALSE, echo = TRUE, message = FALSE}
+# Adding variables indicating whether participants
+  # (1,2,3) answered comprehension questions correctly
+  # (4) spent more or less than 40 seconds on the explanation page
+data.clean <- data.clean %>%
+  mutate(
+    selective.correct = (scenario1.selective.reporting == T) &
+      (scenario2.selective.reporting == T),
+    publication.correct = (scenario1.publication.bias == T) &
+      (scenario2.publication.bias == F),
+    sharing.correct = scenario.no.data == T,
+    time.correct = click.submit > 40
+  ) %>%
+# Filter out objects that have either
+# (1) answered one of the questions incorrectly
+# (2) went too fast through the explanation
+  mutate(filtered = selective.correct & publication.correct &
+    sharing.correct & time.correct)
+
+# Filter out participants
+data.filtered <- data.clean %>%
+  filter(filtered)
+```
+
+# Methods
+
+```{r, samplesize, echo = FALSE, include = FALSE, cache=TRUE}
+N.before.excl <- data.clean %>% nrow()
+N.after.excl <- data.filtered %>% nrow()
+scenarios <- data.clean %>% 
+  select(starts_with("scenario")) %>% 
+  colSums()
+
+# this scenario is correct when answered FALSE 
+scenarios[4] <- N.before.excl - scenarios[4] 
+min.scenario <- names(scenarios)[which.min(scenarios)]
+
+# Rename practices
+ComputeNiceName <- function(min.scenario) {
+  if(str_detect(min.scenario, "selective")) {
+    return("selective reporting")
+  }
+  else if (str_detect(min.scenario, "publication")) {
+    return("publication bias")
+  }
+  else if (str_detect(min.scenario, "data")) {
+    return("not sharing data")
+  }
+}
+
+nice.name <- ComputeNiceName(min.scenario)
+
+ComputeNiceSentence <- function(min.number){
+  if(min.number == 1){
+    return("the scenario about a researcher conducting multiple experiments and only reporting the one that gave desired results")
+  }
+  if(min.number == 2){
+    return("the scenario about a researcher trying multiple analyses and only reporting the one that gave desired results")
+  }
+  if(min.number == 3){
+    return("the scenario about a journal that receives multiple articles on the same topic and only publishes the ones that report desired results")
+  }
+  if(min.number == 4){
+    return("the scenario about a researcher who has conducted multiple studies on the same topic with varying results and submits all studies to a journal, which publishes them all")
+  }
+  if(min.number == 5){
+    return("the scenario about a researcher who does not reply to a request for data from a colleague who wants to check their analyses for errors")
+  }
+}
+
+nice.sentence <- ComputeNiceSentence(which.min(scenarios))
+```
+
+```{r, demographic data, echo = FALSE, include = FALSE}
+# Load in demographics
+demographic <- "prolific_export_5f1c33d8f7935c49c8a8b121.csv"
+demographic.data <- read.csv(demographic)
+
+# Clean the data
+  # Select only variables we'll use 
+demographics.clean <- demographic.data %>%
+  select(c(
+    participant_id,
+    status,
+    age,
+    entered_code,
+    Current.Country.of.Residence,
+    Sex,
+  )) %>%
+    mutate_at(vars(age),as.numeric
+  ) %>%
+  # Rename variables
+  rename(
+    prolific.pid = participant_id,
+    completion.method = entered_code,
+    current.residence = Current.Country.of.Residence,
+    gender = Sex
+  ) %>%
+  # Apply filters. Status must be APPROVED, the completion code must be entered, and the current country of
+  # residence must be the Netherlands (or left blank)
+  mutate(
+    status.correct = (status == "APPROVED"),
+    completion.correct = (completion.method == "649B7BD8"),
+    residence.correct = (current.residence == "Netherlands" | current.residence == "")
+  ) %>%
+  mutate(
+    demographic.filter = (status.correct & completion.correct & residence.correct)
+  )
+demographics.clean <- demographics.clean %>%
+  filter(demographic.filter)
+
+# Add demographic data to dataset
+data.clean <- left_join(data.clean, demographics.clean, by = "prolific.pid")
+# Reapply filter to filter demographics correctly
+data.filtered <- data.clean %>%
+  filter(filtered)
+
+# Demographics (age, gender, education) will be displayed in inline expressions of code. Optionally manually assess missing data first and alter text based on this.
+
+# Note on Education: There is a 'Anders, namelijk' option. Manually view the text answers to that and determine whether they can be grouped into one of the already existing categories. In this case, they could all be grouped under WO.
+
+```
+
+## Participants
+
+Our sample was selected based on the following selection rules: Dutch
+speaking, currently living in the Netherlands, and 18 years or older (as
+indicated when registering as a participant in the Prolific database).
+For our initial sample, we terminated data collection as planned after
+`r N.before.excl` participants completed the survey. We based this
+sample size on estimated acceptability ratings, also taking into account
+this pilot sample would be primarily used to inform us on the clarity of
+our questions and explanations. We aimed to gain an estimate standard
+deviation form this pilot study, which we can then use to determine the
+sample size of our next study. After data collection, we then applied
+our two planned exclusion criteria. Of the `r N.before.excl`
+participants,
+`r data.clean %>% filter(selective.correct == F | publication.correct == F | sharing.correct == F) %>% nrow()`
+had one or more of the comprehension questions incorrect (the
+comprehension question that had the most incorrect answers (`r N.before.excl - min(scenarios)`) related to `r nice.name`, namely `r nice.sentence`), and
+`r (data.clean %>% filter(time.correct == F) %>% nrow())` participants
+were faster than 40 seconds on the page where the scientific incentive structure
+was explained. As can be seen in Appendix A, answers of both these
+groups of participants were different from the answers of other
+participants in that they were more uniformly spread over the
+acceptability scale. We
+therefore excluded a total of `r N.before.excl - N.after.excl`
+participants. The remaining sample (*N* = `r N.after.excl`) consisted of
+`r round((sum(data.filtered$gender == "Female", na.rm = T) / N.after.excl *100), digits = 2)`% females and `r round((sum(data.filtered$gender == "Male", na.rm = T) / N.after.excl *100), digits = 2)`% males. One participant had a missing value on the gender variable. The remaining sample had a mean age of `r round(mean(data.filtered$age, na.rm = T), digits = 2)` years
+($SD$ = `r round(sd(data.filtered$age, na.rm = T), digits = 2)`, Range = `r min(data.filtered$age, na.rm = T)` - `r max(data.filtered$age, na.rm = T)`). Most participants
+had a higher level of education (Higher professional education = `r (sum(data.filtered$education.choice == "Hoger beroepsonderwijs (hbo)") / N.after.excl *100)`%, University =
+`r (sum(data.filtered$education.choice == "Wetenschappelijk onderwijs (wo)",data.filtered$education.choice == "Anders, namelijk") / N.after.excl *100)`%), whereas a smaller number of participants had a
+middle-level applied education (Post-secondary vocational education = `r (sum(data.filtered$education.choice == "Middelbaar beroepsonderwijs (mbo)") / N.after.excl *100)`%, High school = `r (sum(data.filtered$education.choice == "Middelbare school") / N.after.excl *100)`%).
+
+## Material
+
+The study consisted of a survey with a single condition.The survey included,
+among other measures, a moral acceptability rating that was assessed both
+before and after information about the motivations of the different stakeholders (government,
+journals, universities, and researchers) within the incentive structure
+in science was given. A .qsf and corresponding Word file with the entire
+survey as programmed in Qualtrics can be found on the osf project page
+(<https://osf.io/7g96f/> under *study materials/Qualtrics*). The answers
+were given on slider scales from 0 to 100 (numbers not visible to
+participants) with labels at the extremes and in the middle, unless
+otherwise specified below. Further information on the names and description of the variables of this study can also be found in a codebook on the osf project page. 
+
+## Procedure
+
+After giving informed consent and reading a short introduction to the
+study, participants were asked how much they agree with the statement '*I
+trust knowledge stemming from scientific research within Psychology'*
+(totally disagree - neither disagree nor agree - totally agree). The next survey item then
+assessed participants' familiarity with knowledge stemming from Psychology:
+'*how familiar are you with knowledge stemming from Psychological
+Science?*' (not familiar at all - somewhat familiar - entirely familiar),
+followed by a multiple choice question about how this familiarity came
+about (read about it in the news / learned about it at school or university /
+know someone who works in the field / learned about it at work / work as a researcher in psychology / other, please specify / not familiar). Participants then read an explanation of
+one of the three practices, and answered two comprehension questions, o. They then
+provided their opinion on '*how morally acceptable do you think it is
+when scientists report selectively?'* (totally unacceptable - neutral -
+totally acceptable) followed by *'which percentage of scientists do you
+think have selectively reported parts of a study at least once in their
+career?'* (0 - 100, each decimal indicated on the slider).
+
+After this estimation, meta scientific estimates of the prevalence of selective
+reporting were provided, and participants were asked *'how morally acceptable do you think it is when 40-50% of scientists selectively report parts of a study at least once
+in their career?'*. This sequence (explanation, comprehension
+question(s), acceptability rating, prevalence estimate, and
+acceptability of meta scientific prevalence estimate) was then repeated for
+*publication bias* as well as *lack of data sharing*. What followed was a
+400-word explanation of the motivations of the different stakeholders (government, journals,
+universities and scientists) within the current scientific incentive
+structure. For example, it was explained that in return for finance, the
+government expects excellence and innovation, and that journals
+strive for many subscribers and a large readership which can be
+accomplished by publishing innovative and striking findings that confirm
+the desired results. For universities, the text explained that reputation
+is built by the success of their scientific staff in obtaining
+competitive grants from the government or publishing papers. Lastly, for
+scientists, it was explained that a successful career is best maintained
+by doing innovative and striking research that confirms the desired
+results, as this will lead to a higher chance of obtaining grants and/or
+publishing papers; due to limited time and resources, this will leave
+less time to document data for sharing or report studies that do not
+show the desired results.
+
+After reading this explanation text, participants were asked *'how surprised are you about
+the current incentive structure within science, as explained above?'*
+(not at all surprised - neutral - entirely surprised). Next, participants were
+asked *'given the knowledge you now have about the incentive structure
+in science, how much understanding do you have for scientists who
+selectively report?'* (entirely no understanding - neutral - a lot of
+understanding). Accompanying this question was a reminder on the definition of *selective reporting*. This question was added after piloting revealed that
+explaining motivations will likely have participants sympathize. This
+would then perhaps translate into their moral acceptability rating, even
+though one can have a lot of understanding for something and still think
+it is not morally acceptable. We therefore included this question about
+understanding, which was then directly followed by *'Given the knowledge
+you now have about the incentive structure in science, how morally
+acceptable do you think it is when scientists selectively report?'*
+(totally unacceptable - neutral - totally acceptable). On the next page,
+participants were asked to indicate how responsible (totally not responsible -
+totally responsible) they think the different stakeholders (government, scientific journals, universities and researchers) are to resolve *selective reporting*. This sequence of questions
+(reminder, understanding rating, acceptability rating, responsibility
+ratings) was then repeated for *publication bias* and *lack of data sharing*.
+
+After these sequences, participants were asked three last questions. First, 
+participants were again asked how much they agree with the statement '*I trust 
+knowledge stemming from scientific research within Psychology'* (totally disagree 
+- neither disagree nor agree - totally agree). Second, participants were asked to 
+indicate how much they agree with the statement *'If the different parties do not
+take responsibility to resolve the three research practices (selective
+reporting, publication bias, lack of data sharing), the tax money that
+currently goes to scientific research within psychology should be
+lowered'* (totally disagree - neither disagree nor agree - totally
+agree). Lastly, participants were asked for their highest obtained
+degree (high school / post-secondary vocational education / 
+higher professional education / university / other, namely: ...). At the end of
+the survey, there was space for participants to leave questions and/or comments. 
+Participants were also informed that all stakeholders and other involved parties are constantly
+reflecting on what can be done better in science, that this survey
+itself was part of a project that received finance to make psychological
+science more efficient and reliable, and that the participant's given
+opinion would contribute to this end. We judged it was important to add this information, as to not leave participants with an inaccurately negative perception of the state of affairs in psychological science.
+
+# Results
+
+Results of the planned analyses.
+
+## Research Question 1
+
+For *selective reporting*, *publication bias*, and *not sharing data*,
+we assessed the mean **moral acceptability,** both before and after
+explaining the incentive structure in science that leads to these
+practices. We performed paired *t*-tests to examine whether
+participants deemed the three practices more acceptable after reading
+about the incentive structure. Based on previous work by [@pickett2018questionable], which 
+shows that the general public finds it morally
+unacceptable that researchers selectively report, researchers might
+think: "If the general public knew how science operates and what incentive 
+structures are in place, they would not
+find it as morally unacceptable that I do not share data and selectively
+report or do not publish null results." Therefore, one
+of our main interests was knowing whether explaining the incentive structure
+makes people see a practice as more acceptable. We tested a
+two-sided test, as it might be that learning about the incentive structure
+makes the public think it is even less morally acceptable. As we hoped to be able
+to make a claim that explanations of the incentive structure makes a
+practice more acceptable for *any or all* of the three practices, we
+corrected our alpha level for 3 tests, following [@good1982c140] and rounding
+down to an alpha level of .035.
+
+```{r, echo = T, include = F}
+## Tidy the data
+acceptability.data <- data.filtered %>%
+  # Select the right columns
+  select(starts_with("acceptability"), prolific.pid) %>%
+  # Tidy the data
+  pivot_longer(
+    cols = starts_with("acceptability"),
+    names_to = "name",
+    values_to = "acceptability"
+  ) %>%
+  separate(
+    col = "name",
+    into = c("reaction", "topic1", "topic2", "time"),
+    sep = "[.]"
+  ) %>%
+  select(-reaction) %>%
+  unite(col = "topic", starts_with("topic"), sep = " ") %>%
+  pivot_wider(names_from = time, values_from = acceptability) %>%
+  mutate(difference = post - pre) %>%
+  pivot_longer(
+    cols = c("pre", "post"),
+    names_to = "time",
+    values_to = "acceptability"
+  ) %>%
+  mutate(time = factor(time, levels = c("pre", "post"))) %>%
+  mutate(topic = str_replace(topic, "no data", "not sharing data")) %>%
+  mutate(topic = factor(topic,
+    levels = c(
+      "selective reporting",
+      "publication bias",
+      "not sharing data"
+    )
+  ))
+# OUT: data frame with: id, topic, difference pre/post, pre/post, accept score
+
+# Find the group means
+acceptability.data.means <- acceptability.data %>%
+  group_by(topic, time) %>%
+  summarise(grp_mean = mean(acceptability))
+
+# And add them to the dataset
+acceptability.data <- left_join(acceptability.data, acceptability.data.means)
+rm(acceptability.data.means)
+
+# Compute statistics and add Tidystats of the t-tests
+temp.t1 <- acceptability.data %>%
+  select(prolific.pid, topic, time, acceptability) %>%
+  pivot_wider(names_from = time, values_from = acceptability) %>%
+  filter(topic == "selective reporting")
+
+t1.accept <- t.test(temp.t1$pre, temp.t1$post, paired = T)
+#rm(temp)
+
+temp.t2 <- acceptability.data %>%
+  select(prolific.pid, topic, time, acceptability) %>%
+  pivot_wider(names_from = time, values_from = acceptability) %>%
+  filter(topic == "publication bias")
+
+t2.accept <- t.test(temp.t2$pre, temp.t2$post, paired = T)
+#rm(temp)
+
+temp.t3 <- acceptability.data %>%
+  select(prolific.pid, topic, time, acceptability) %>%
+  pivot_wider(names_from = time, values_from = acceptability) %>%
+  filter(topic == "not sharing data")
+
+t3.accept <- t.test(temp.t3$pre, temp.t3$post, paired = T)
+#rm(temp)
+
+# Add type/notes in add_stats
+results <- list() %>%
+  add_stats(t1.accept) %>%
+  add_stats(t2.accept) %>%
+  add_stats(t3.accept)
+
+# print in text with `r papaja::apa_print(t1.accept)$statistic` or $estimate or $full_result
+```
+
+Figure \ref{fig:accept} shows the acceptability ratings for all three
+practices. Acceptability of selective reporting was rated higher after
+reading about the incentive structure in science compared to before, $M_{pre}$ = `r mean(temp.t1$pre)`, $M_{post}$ = `r mean(temp.t1$post)`,
+`r papaja::apa_print(t1.accept)$full_result`. Acceptability of
+publication bias was most compatible with no difference between before
+and after reading about the incentive structure, $M_{pre}$ = `r mean(temp.t2$pre)`, $M_{post}$ = `r mean(temp.t2$post)`,
+`r papaja::apa_print(t2.accept)$full_result`. And for not sharing data,
+the results were also most compatible with no difference, $M_{pre}$ = `r mean(temp.t3$pre)`, $M_{post}$ = `r mean(temp.t3$post)`,
+`r papaja::apa_print(t3.accept)$full_result`. These results are stable
+over a 'leave one out' analysis (see Appendix B).
+
+```{r, out.width = "100%", message = F, warning=F, fig.height = 3, fig.cap = "Moral acceptability before and after reading about incentive structure. \\label{fig:accept}", echo = F}
+# Create the plot
+acceptability.data %>%
+  ggplot(aes(x = time, y = acceptability, fill = time)) +
+  geom_violin(trim = FALSE) +
+  facet_wrap(~topic) +
+   stat_summary(
+    fun.data = "mean_sdl", 
+    fun.args = list(mult = 1), 
+    geom = "pointrange", 
+    color = "black",
+    shape = 21,
+    fill = "white",
+    show.legend = F) +
+  theme_cowplot() +
+  ylim(0, 105) +
+  theme(legend.position = "none") +
+  labs(
+    x = "Before/after introducing information on incentive structure",
+    y = "Moral acceptability (0-100)"
+  )
+```
+
+We also asked participants to indicate how surprised they were to learn about the incentive structure in science. Surprise appeared to be relatively moderate, with a mean of `r printnum(mean(data.filtered$surprised.incentive.struc))` ($SD$ = `r sd(data.filtered$surprised.incentive.struc)`). A relationship between surprise and acceptability could be present, as participants who are more surprise about, and therefore less familiar with, the incentive structure in science could potentially have a larger pre- to post-test difference score. However, this assumption is beyond the scope of this study and should be a explored in future research.
+
+## Research Question 2
+
+For the three practices (*selective reporting*, *publication bias*, and
+*not sharing data*), we assessed the participants' **guess of
+prevalence** of the practice. We compared this guess of the Dutch public
+to current meta scientific estimates of the prevalence of these
+practices in psychology, to answer the question: How closely aligned are
+the prevalence estimates of the general public with meta scientific
+estimates of the prevalence of these practices? After providing meta
+scientific estimates about the prevalence, we asked participants'
+**moral acceptability rating of this given prevalence**. How morally
+acceptable do participants think a practice is after they hear how often
+it occurs? It makes sense to assume that they would respond differently
+depending on what they believe is the frequency of each practice. Since
+we had no previous knowledge on how often people think these practices
+happen (and thus, if they will believe they occur much less, or much
+more, than their beliefs), these analyses were purely exploratory. We
+computed a difference score between the meta scientific prevalence and
+participants' guess of prevalence to assess whether participants over-
+or underestimated the prevalence. We used this difference score to
+predict moral acceptability after post survey.
+
+Figure \ref{fig:prevalence} depicts participants' acceptability ratings
+as a function of their prevalence guess of the three practices. The
+pattern seems to be that when participants underestimate the prevalence
+of a given practice, their moral acceptability of that practice is lower
+compared to when they overestimate the prevalence. Of note is that almost all participants underestimated the prevalence of publication bias.
+
+```{r, out.width = "100%", fig.height = 3, fig.cap = "Acceptability rating by prevalence guess.\\label{fig:prevalence}", echo = F}
+# Reshape the data
+data.filtered %>%
+  # Select correct variables
+  select(starts_with("prevalence"), prolific.pid) %>%
+  # Put the three "topics" in the same column and improve the names
+  pivot_longer(cols = -prolific.pid, names_to = "name", values_to = "value") %>%
+  separate(
+    col = "name",
+    into = c("prevalence", "metric", "topic"),
+    sep = "[.]",
+    extra = "merge"
+  ) %>%
+  select(-prevalence) %>%
+  mutate(topic = str_remove(topic, "scientists.")
+  %>% str_replace("[.]", " ")
+    %>% str_replace("no data", "not sharing data")) %>%
+  pivot_wider(names_from = metric, values_from = value) %>%
+  # Add the true estimates (given in survey)
+  mutate(
+    estimate.true = rep(c(45, 93, 62), n() / 3),
+    estimate.diff = estimate - estimate.true
+  ) %>%
+  mutate(diff.bool = ifelse(estimate.diff > 0,
+    "overestimate",
+    "underestimate"
+  )) %>%
+  mutate("topic" = factor(topic,
+    levels = c(
+      "selective reporting",
+      "publication bias",
+      "not sharing data"
+    )
+  )) %>%
+  # Create plot
+  ggplot(aes(y = acceptable, x = estimate, color = diff.bool)) +
+  geom_point() +
+  facet_wrap(~topic) +
+  theme_cowplot() +
+  geom_smooth(method = "lm", formula = "y~x") +
+  labs(color = "")+
+  labs(
+    x = "Prevalence guess",
+    y = "Moral acceptability (0-100)"
+  )
+
+```
+
+## Research question 3
+
+For the three practices, we asked participants to indicate how
+**responsible for resolving** these practices they consider the
+following four stakeholders to be: the government, universities, scientific
+journals, and researchers. We tested whether there were statistically
+significant differences in ratings across these four stakeholders, for each
+of the three practices, in an attempt to answer who the general public
+thinks is most responsible to solve these issues. We believed that the
+question of who is responsible is interesting for each of the three
+practices separately, and therefore, we used the overall alpha level of `r alpha.level` for
+each test. 
+
+```{r, out.width="100%", message = F, include = F}
+# Reshape the data
+responsibility.data <- data.filtered %>%
+  # Select correct variables
+  select(
+    response.id,
+    starts_with("responsibility")
+  ) %>%
+  # Put the three "topics" in the same column and improve the names
+  pivot_longer(
+    cols = -response.id,
+    names_to = "temp",
+    values_to = "responsibility"
+  ) %>%
+  mutate(temp = str_remove(temp, "responsibility.")) %>%
+  separate(
+    col = "temp",
+    into = c("institute", "topic1", "topic2"),
+    sep = "[.]"
+  ) %>%
+  unite(col = "topic", starts_with("topic"), sep = " ") %>%
+  mutate(topic = str_replace(topic, "no data", "not sharing data")) %>%
+  mutate("topic" = factor(topic,
+    levels = c(
+      "selective reporting",
+      "publication bias",
+      "not sharing data"
+    )
+  ))
+
+# Obtain group means of topic/institute
+responsibility.data.means <- responsibility.data %>%
+  group_by(topic, institute) %>%
+  summarise(grp_mean = mean(responsibility))
+
+# Join the group means on the dataset
+responsibility.data <- left_join(responsibility.data, responsibility.data.means)
+rm(responsibility.data.means)
+
+temp.SR <- responsibility.data %>%
+  select(response.id, topic, institute, responsibility) %>%
+  filter(topic == "selective reporting") %>%
+  select(-topic)
+
+aov1.responsibility.SR <- aov(responsibility ~ institute, data = temp.SR)
+
+temp.PB <- responsibility.data %>%
+  select(response.id, topic, institute, responsibility) %>%
+  filter(topic == "publication bias") %>%
+  select(-topic)
+
+aov2.responsibility.PB <- aov(responsibility ~ institute, data = temp.PB)
+
+
+temp.NSD <- responsibility.data %>%
+  select(response.id, topic, institute, responsibility) %>%
+  filter(topic == "not sharing data") %>%
+  select(-topic)
+
+aov3.responsibility.NSD <- aov(responsibility ~ institute, data = temp.NSD)
+
+# Add type/notes in add_stats
+results <- results %>%
+  add_stats(aov1.responsibility.SR) %>%
+  add_stats(aov2.responsibility.PB) %>%
+  add_stats(aov3.responsibility.NSD)
+```
+
+Figure \ref{fig:responsibility} shows how **responsible for resolving**
+these practices four different stakeholders were rated to be: the government,
+universities, scientific journals, and researchers. The first one-way ANOVA revealed that there was not a statistically significant difference in responsibility between at least two stakeholders for
+selective reporting,
+`r papaja::apa_print(aov1.responsibility.SR)$full_result$institute`. However, a second and third one-way ANOVA revealed that there was a statistically significant difference in responsibility between at least two stakeholder for
+publication bias,
+`r papaja::apa_print(aov2.responsibility.PB)$full_result$institute` and for
+not sharing data,
+`r papaja::apa_print(aov3.responsibility.NSD)$full_result$institute` respectively. 
+
+
+```{r, out.width = "100%", echo = F, warning = F, fig.height = 3, fig.cap = "Responsibility of stakeholders for resolving the practice. The settings for the bandwidth of the ridges plot is default. \\label{fig:responsibility}", message = F}
+# Create a plot
+responsibility.data %>%
+  ggplot(aes(x = responsibility, y = institute, fill = institute)) +
+  geom_density_ridges(show.legend = F) + # comment bandwidth
+  facet_wrap(~topic) +
+  theme_cowplot() +
+  labs(
+    x = "How responsible is stakeholder for resolving the practice \n(totally not responsible - totally responsible)",
+    y = ""
+  )
+```
+
+  Results from the ANOVA's showed a significant difference in the means of stakeholders' responsibility of resolving publication bias and not sharing data. Thus, we explored the pattern in these two ANOVA's with 6 paired
+comparisons (.035/6), by performing simple comparisons between government, universities,
+journals, and researchers. 
+  Figure 4 and Figure 5 show which stakeholders the public find most responsible for resolving publication bias and scientist not sharing their data respectively. Tukey’s HSD Test for multiple comparisons found that the mean value of responsibility for resolving publication bias was significantly different between journal and government ($M_\Delta$ = 33.32, 95% C.I. [25.19, 41.46], *p* < .001), journal and scientist ($M_\Delta$ = 27.96, 95% C.I. [19.83, 36.10], *p* < .001) and journal and university ($M_\Delta$ = 24.99, 95% C.I. [16.85, 33.13], *p* < .001). These results indicate that the public finds that journals are most responsible for resolving the issue of scientists not sharing their data. 
+
+```{r, out.width = "100%", out.extra = '', echo = F, warning = F, fig.height = 3, fig.cap = "Results of Tukey's HSD test to compare differences in means of responsibility of resolving publications bias, for the different stakeholders. \\label{fig:multicomp}"}
+# Perform Tukey's HSD test to explore paired comparions for significant topics.
+
+Multi.Comp.PB <- TukeyHSD(aov2.responsibility.PB <- aov(responsibility ~ institute, data = temp.PB), ordered = F)
+Multi.Comp.NSD <- TukeyHSD(aov3.responsibility.NSD <- aov(responsibility ~ institute, data = temp.NSD), ordered = F)
+
+# ggHSD function altered to fit the data and style of visualization
+ggHSD_Liam=function(tukey,no=1,digits=2,interactive=FALSE){
+  #result=TukeyHSD(fit)
+  result=tukey[[no]]
+  name=names(tukey)[no]
+  df=data.frame(result)
+  df[["sig"]]=ifelse(df$p.adj>0.05,"",ifelse(df$p.adj>0.01,"*","**"))
+  df[["Comparison"]]<-rownames(df)
+  df[["data_id"]]=1:nrow(df)
+  df[["tooltip"]]=paste0(round(df$diff,digits),"(",round(df$lwr,digits),"-",
+                         round(df$upr,digits),")<br>p = ",round(df$p.adj,4))
+  df
+  df2=df[c(2)]
+  colnames(df2)[1]="y"
+  df2$Comparison=rownames(df2)
+  df3=df[c(3)]
+  colnames(df3)[1]="y"
+  df3[["Comparison"]]=rownames(df3)
+  df4=rbind(df2,df3)
+  df4[["data_id"]]=1:nrow(df4)
+  df4
+  lab=paste("Differences in means of responsibility")
+  
+  # Create plot of HSD results
+  p<-ggplot(df,aes_string(x="Comparison",y="diff",colour="Comparison",
+                          data_id="data_id",tooltip="tooltip"))+
+    geom_hline(yintercept=0,linetype=2)+
+    geom_errorbar(aes_string(ymin="lwr",ymax="upr"),size=1,width=0.2)+
+    geom_text(aes_string(label="sig"),size=7,vjust=0.2)+
+    geom_path_interactive(data=df4,aes_string(x="Comparison",y="y",colour="Comparison",
+                                              group="Comparison",
+                                              data_id="data_id",tooltip="Comparison"))+
+
+    geom_point_interactive(size=3)+
+    coord_flip()+
+    ylab(lab)+xlab("")+
+    guides(colour=FALSE,label=FALSE)+
+    
+    theme(plot.title=element_text(size=rel(1.5), hjust = 0.5),
+          axis.text.y=element_text(angle=90,size=rel(1.5),hjust=0.5),
+          axis.text.x=element_text(size=rel(1.5)),
+          axis.title.x=element_text(size=rel(1.5)))+
+    theme_cowplot() +
+    theme(legend.position="none")
+ 
+  p
+}
+
+plot.PB <- ggHSD_Liam(Multi.Comp.PB) + facet_wrap(~"Publication bias")
+plot.NSD <- ggHSD_Liam(Multi.Comp.NSD) + facet_wrap(~"Not sharing data")
+
+plot.PB
+plot.NSD
+```
+
+```{r, message = F, include = F}
+# Storing difficulty answerring the questions about the ascription of responsibility in a vector for later analyses.
+
+diff.resp <- data.filtered$difficult.responsibility
+
+```
+
+Furthermore, Tukey’s HSD Test for multiple comparisons found that the mean value of responsibility for resolving the issue of scientist not sharing their data was significantly different between scientist and government ($M_\Delta$ = 28.00, 95% C.I. [19.69, 36.31], *p* < .001), scientist and journal ($M_\Delta$ = 28.65, 95% C.I. [20.34, 36.96], *p* < .001) and scientist and university ($M_\Delta$ = 12.46, 95% C.I. [4.15, 20.78], *p* < .001). These results indicate that the public finds that scientist are most responsible for resolving the practice of publication bias.
+
+We asked participants how easy or difficult they found answering the questions about the ascription of responsibility. Participants generally did not report too much difficulty with this ($M$ = `r mean(diff.resp)`, $SD$ = `r sd(diff.resp)`, Range = `r min(diff.resp)` - `r max(diff.resp)`).
+
+We also computed correlations for ascription of responsibility between
+all 4 stakeholders, for all 3 practices. If people think one stakeholder is more
+responsible, do they think other stakeholders are less responsible? Or are
+there strong positive correlations? As can be seen in appendix C, Table \ref{tab:correlation table responsibility stakeholder SR} shows the correlations between all stakeholders for selective reporting. Researchers' responsibility ratings were weakly correlated to responsibility ratings for the government or journals, but moderately to universities. The remaining correlations found were both weak and non-significant. Table \ref{tab:correlation table responsibility stakeholder PB} shows the correlations between all stakeholders for publication bias. Again, researchers' responsibility ratings were not strongly correlated to responsibility ratings for the government or journals, but moderately correlated to universities. In addition, responsibility ratings for universities were moderately correlated to responsibility ratings for governments. The remaining correlations found were both weak and non-significant. Table \ref{tab:correlation table responsibility stakeholder NSD} shows the correlations between all stakeholders for not sharing data. The government's responsibility ratings were moderately correlated to responsibility ratings for journals and universities, but not correlated to scientists. In addition, responsibility ratings for universities were moderately correlated to responsibility ratings for journals. The remaining correlations found were both weak and non-significant.
+
+```{r, correlation table responsibility stakeholder SR, echo = F, warning = F, results = "asis"}
+
+### Selective Reporting
+
+# Select correct variables
+responsibility.corr.selective.reporting <- data.filtered %>%
+  select(
+    response.id, responsibility.government.selective.reporting, responsibility.journal.selective.reporting,
+    responsibility.university.selective.reporting, responsibility.scientist.selective.reporting,
+  ) %>%
+    rename(
+    'Government' =  responsibility.government.selective.reporting,
+    'Journal' =  responsibility.journal.selective.reporting,
+    'University' =  responsibility.university.selective.reporting,
+    'Scientist' =  responsibility.scientist.selective.reporting,
+  )
+
+# Remove ID
+responsibility.corr.selective.reporting <- responsibility.corr.selective.reporting[c(2:5)]
+
+# Create correlation matrix
+responsibility.corr.selective.reporting.mat <- 
+  corx(responsibility.corr.selective.reporting, 
+       triangle = "lower", round = 2,
+       remove_lead = T)
+
+# Adjust p-values with Hommel's correction
+p.adj.SR <- p.adjust(responsibility.corr.selective.reporting.mat$p, method = "hommel", 
+         n = ncol(responsibility.corr.selective.reporting)^2)
+
+p.mat.SR.hommel <- matrix(data = p.adj.SR, ncol = ncol(responsibility.corr.selective.reporting), 
+                   nrow = ncol(responsibility.corr.selective.reporting))
+
+# Change p-value matrix of original matrix to apply hommel corrected p-values
+responsibility.corr.selective.reporting.mat$p <- p.mat.SR.hommel
+
+
+# Make table APA
+responsibility.corr.SR.APA <- papaja::apa_table(responsibility.corr.selective.reporting.mat$apa,
+                                  caption = "Correlations between 
+                                  all stakeholders for selective reporting",
+                                  escape = T,
+                                  placement = "h")
+```
+
+```{r, correlation table responsibility stakeholder PB, echo = F, warning = F, results = "asis"}
+
+### Publication Bias
+
+# Select correct variables
+responsibility.corr.publication.bias <- data.filtered %>%
+  select(
+    response.id, responsibility.government.publication.bias, responsibility.journal.publication.bias,
+    responsibility.university.publication.bias, responsibility.scientist.publication.bias,
+  ) %>%
+    rename(
+    'Government' =  responsibility.government.publication.bias,
+    'Journal' =  responsibility.journal.publication.bias,
+    'University' =  responsibility.university.publication.bias,
+    'Scientist' =  responsibility.scientist.publication.bias,
+  )
+
+# Remove ID
+responsibility.corr.publication.bias <- responsibility.corr.publication.bias[c(2:5)]
+
+# Create correlation matrix
+responsibility.corr.publication.bias.mat <- 
+  corx(responsibility.corr.publication.bias, 
+       triangle = "lower", round = 2,
+       remove_lead = T)
+
+# Adjust p-values with Hommel's correction
+p.adj.PB <- p.adjust(responsibility.corr.publication.bias.mat$p, method = "hommel", 
+         n = ncol(responsibility.corr.publication.bias)^2)
+
+p.mat.PB.hommel <- matrix(data = p.adj.PB, ncol = ncol(responsibility.corr.publication.bias), 
+                   nrow = ncol(responsibility.corr.publication.bias))
+
+# Change p-value matrix of original matrix to apply hommel corrected p-values
+responsibility.corr.publication.bias.mat$p <- p.mat.PB.hommel
+
+# Make table APA
+responsibility.corr.PB.APA <- papaja::apa_table(responsibility.corr.publication.bias.mat$apa,
+                                  caption = "Correlations between 
+                                  all stakeholders for publication bias",
+                                  escape = T,
+                                  placement = "t")
+```
+
+```{r, correlation table responsibility stakeholder NSD, echo = F, warning = F, results = "asis"}
+### No Data Sharing
+
+# Select correct variables
+responsibility.corr.no.data <- data.filtered %>%
+  select(
+    response.id, responsibility.government.no.data, responsibility.journal.no.data,
+    responsibility.university.no.data, responsibility.scientist.no.data,
+  ) %>%
+    rename(
+    'Government' =  responsibility.government.no.data,
+    'Journal' =  responsibility.journal.no.data,
+    'University' =  responsibility.university.no.data,
+    'Scientist' =  responsibility.scientist.no.data,
+  )
+
+# Remove ID
+responsibility.corr.no.data <- responsibility.corr.no.data[c(2:5)]
+
+# Create correlation matrix
+responsibility.corr.no.data.mat <- 
+  corx(responsibility.corr.no.data, 
+       triangle = "lower", round = 2,
+       remove_lead = T)
+
+# Adjust p-values with Hommel's correction
+p.adj.NSD <- p.adjust(responsibility.corr.no.data.mat$p, method = "hommel", 
+         n = ncol(responsibility.corr.no.data)^2)
+
+p.mat.NSD.hommel <- matrix(data = p.adj.NSD, ncol = ncol(responsibility.corr.no.data), 
+                   nrow = ncol(responsibility.corr.no.data))
+
+# Change p-value matrix of original matrix to apply hommel corrected p-values
+responsibility.corr.no.data.mat$p <- p.mat.NSD.hommel
+
+# Make table APA
+responsibility.corr.NSD.APA <- papaja::apa_table(responsibility.corr.no.data.mat$apa,
+                                  caption = "Correlations between 
+                                  all stakeholders for not sharing data",
+                                  escape = T,
+                                  placement = "h")
+
+
+```
+
+## Research question 4
+
+This research question focused on several general (i.e., not specific to
+the three separate research reporting practices) measures to assess
+public opinion of psychological science.
+
+We assessed how much **trust** the Dutch public has in knowledge
+forwarded by psychological science and how much this trust has been
+impacted by the information in the survey by comparing the trust
+measured at the beginning and the end of the survey.
+
+```{r, include = F}
+# Reshape the data
+trust.data <- data.filtered %>%
+  # Select correct variables
+  select(response.id, knowledge.trust.pre, knowledge.trust.post) %>%
+  # Compute differences pre/post
+  mutate(diff = knowledge.trust.post - knowledge.trust.pre) %>%
+  # Tidy the data
+  pivot_longer(-c(response.id, diff), names_to = "time", values_to = "trust") %>%
+  mutate(
+    time = str_remove(time, "knowledge.trust."),
+    time = factor(time, levels = c("pre", "post"))
+  )
+# Add group means
+trust.data.means <- trust.data %>%
+  group_by(time) %>%
+  summarise(grp_mean = mean(trust))
+# Join the data
+trust.data <- left_join(trust.data, trust.data.means)
+rm(trust.data.means)
+
+# Add tidystats t-test
+temp <- trust.data %>%
+  select(response.id, time, trust) %>%
+  pivot_wider(names_from = time, values_from = trust)
+
+t1.trust <- t.test(temp$pre, temp$post, paired = T)
+rm(temp)
+
+results <- results %>%
+  add_stats(t1.trust)
+
+# Calculation of Cohen's d
+before <- trust.data$trust[trust.data$time == "pre"]
+after <- trust.data$trust[trust.data$time == "post"]
+diff <- after - before
+(mean(before) - mean(after)) / sd(diff)
+```
+
+Figure \ref{fig:trust} shows that participants' trust in knowledge
+coming from psychological science had declined at the end of the survey
+(`r papaja::apa_print(t1.trust)$full_result`, *d* = `r (mean(before) - mean(after)) / sd(diff)`).
+
+
+```{r, out.width="100%", message = F, fig.height = 3, echo = F, fig.cap = "Trust in knowledge coming from psychological science at the beginning and at the end of the survey.\\label{fig:trust}"}
+# Create plot
+trust.data %>%
+  ggplot(aes(x = time, y = trust, fill = time)) +
+  geom_violin(show.legend = F) +
+  stat_summary(
+    fun.data = "mean_sdl", 
+    fun.args = list(mult = 1), 
+    geom = "pointrange", 
+    color = "black",
+    fill = "white",
+    shape = 21,
+    show.legend = F) +
+  theme_cowplot() +
+  ylim(c(0, 105))+
+  labs(
+    x = "",
+    y = "Trust in Psychology"
+  )
+```
+
+
+We also asked participants whether they believe **tax money should be
+lowered** if no responsibility is taken to resolve the current practices.  We conceptually replicated
+[@pickett2018questionable], who have asked different, yet comparable,
+questions in a US population about the morality and deservingness of
+punishment of data fraud and selective reporting for a wide range of
+scientific fields. Agreeance with this statement was distributed widely around the center of the scale ($M$ = `r mean(data.filtered$cut.taxes.problems.not.solved)`, $SD$ = `r sd(data.filtered$cut.taxes.problems.not.solved)`). Figure \ref{fig:taxes} shows the spread of agreeance separately for each category of education level.
+
+```{r, out.width="100%", message = F, echo = F, fig.height = 3, fig.cap = "Agreeance with tax money should be lowered if no responsibility is taken to resolve the current practices given familiarity with psychology and education level.\\label{fig:taxes}"}
+# Optionally add values from 'Anders, namelijk' to other categories. Manual assessment showed all 'Anders, namelijk' values belonged in the 'WO' category for this sample, thus factor levels were collapsed.
+data.filtered$education.choice <-fct_collapse(data.filtered$education.choice, "Wetenschappelijk onderwijs (wo)" = c("Wetenschappelijk onderwijs (wo)", "Anders, namelijk"))
+  
+# Complex plot
+data.filtered %>%
+  select(psychology.familiar, cut.taxes.problems.not.solved, education.choice) %>%
+  mutate(education.choice = education.choice %>%
+    str_replace("Middelbare school", "Middelbare school (vo)")) %>%
+  mutate(education.choice = education.choice %>%
+    factor(levels = c(
+      "Middelbare school (vo)",
+      "Middelbaar beroepsonderwijs (mbo)",
+      "Hoger beroepsonderwijs (hbo)",
+      "Wetenschappelijk onderwijs (wo)"
+    ))) %>%
+  ggplot(aes(
+    x = psychology.familiar,
+    y = cut.taxes.problems.not.solved,
+    color = education.choice
+  )) +
+  geom_point(show.legend = F) +
+  facet_wrap(~education.choice,
+    labeller = labeller(
+      education.choice =
+        c(
+          "Middelbare school (vo)" = "vo",
+          "Middelbaar beroepsonderwijs (mbo)" = "mbo",
+          "Hoger beroepsonderwijs (hbo)" = "hbo",
+          "Wetenschappelijk onderwijs (wo)" = "wo"
+        )
+    )
+  ) +
+  theme_cowplot() +
+  labs(
+    x = "Familiarity with research in psychology",
+    y = "Lower tax money agreement",
+    color = "Education level"
+  )
+```
+
+```{r, correlation table individual differences, echo = F, warning = F, results = "asis"}
+# Prepare data
+individual.diff.data <- data.filtered %>%
+  select(
+    knowledge.trust.pre, knowledge.trust.post, psychology.familiar, 
+    surprised.incentive.struc, cut.taxes.problems.not.solved,
+    acceptability.selective.reporting.post, acceptability.publication.bias.post, 
+    acceptability.no.data.post,
+    ) %>%
+  rename(
+    'Trust in psychology (pre)' = knowledge.trust.pre,
+    'Trust in psychology (post)' = knowledge.trust.post,
+    'Familiarity with psychology' = psychology.familiar,
+    'Surprise incentive structure' = surprised.incentive.struc,
+    'Agreement tax cuts' = cut.taxes.problems.not.solved,
+    'Acceptability (selective reporting)' = acceptability.selective.reporting.post,
+    'Acceptability (publication bias)' = acceptability.publication.bias.post,
+    'Acceptability (not sharing data)' = acceptability.no.data.post
+  ) 
+
+# Create correlation table  
+corr.individual.diff.mat <- 
+  corx(individual.diff.data, 
+       triangle = "lower", round = 2,
+       remove_lead = T)
+
+p.adj.diff <- p.adjust(corr.individual.diff.mat$p, method = "hommel", 
+         n = ncol(individual.diff.data)^2)
+
+p.mat.diff.hommel <- matrix(data = p.adj.diff, ncol = ncol(individual.diff.data), 
+                   nrow = ncol(individual.diff.data))
+
+# Make table APA
+corr.individual.diff.APA <- papaja::apa_table(corr.individual.diff.mat$apa,
+                                  caption = "Correlations between 
+                                  possible correlates of public 
+                                  opinion.",
+                                  escape = T)
+
+
+```
+
+To map possible correlates of public opinion, we explored individual differences that may be associated with all the primary outcome measures (i.e., public opinion) in a correlation table. Table \ref{tab:correlation table individual differences} shows these correlations. A moderate correlation was found between trust in psychology at the beginning and end of the study. In addition, a moderate correlation was found between the acceptability ratings of selective reporting and acceptability ratings of publication bias.. The acceptability ratings of publication bias and the acceptability ratings of not sharing data were also moderately correlated.
+
+`r corr.individual.diff.APA`
+
+```{r, ANOVAs individual differences, warning = F, message = F, include = F}
+
+# Two-way Anova 1: differences on trust as a function of both gender and educational level.
+
+trust.data.aov <- data.filtered %>%
+  select(response.id, gender, education.choice, knowledge.trust.pre, knowledge.trust.post)
+  
+aov.trust.pre <- aov(knowledge.trust.pre ~  gender + education.choice, data = trust.data.aov)
+
+aov.trust.post <- aov(knowledge.trust.post ~  gender + education.choice, data = trust.data.aov)
+
+# Two-way Anova 2: differences on familiarity with psychological science as a function of both gender and educational level.
+
+familiar.data.aov <- data.filtered %>%
+  select(response.id, gender, education.choice, psychology.familiar)
+  
+aov.familiar <- aov(psychology.familiar ~  gender + education.choice, data = familiar.data.aov)
+
+# Two-way Anova 3: differences on surprise at incentive structure as a function of both gender and educational level.
+
+surprise.data.aov <- data.filtered %>%
+  select(response.id, gender, education.choice, surprised.incentive.struc)
+  
+aov.surprise <- aov(surprised.incentive.struc ~ gender + education.choice, data = surprise.data.aov)
+
+# Two-way Anova 4: differences on agreement with the statement that tax money should be lowered as a function of both gender and educational level.
+
+agreement.data.aov <- data.filtered %>%
+  select(response.id, gender, education.choice, cut.taxes.problems.not.solved)
+  
+aov.agreement <- aov(cut.taxes.problems.not.solved ~  gender + education.choice, data = agreement.data.aov)
+
+summary(aov.agreement)
+
+# Add stats
+results <- results %>%
+  add_stats(aov.trust.pre) %>%
+  add_stats(aov.trust.post) %>%
+  add_stats(aov.familiar) %>%
+  add_stats(aov.surprise) %>%
+  add_stats(aov.agreement)
+
+```
+
+We also explored differences on trust (both at the beginning and end of
+survey), familiarity with psychological science, surprise at the current
+incentive structure, and agreement with the statement that tax money
+should be lowered as a function of education level and gender. The first ANOVA revealed that there was no statistically significant difference on trust in psychological science before the survey on both gender (`r papaja::apa_print(aov.trust.pre)$full_result$gender`) and educational level (`r papaja::apa_print(aov.trust.pre)$full_result$education_choice`). The same pattern was found for trust in pyschological science after the survey (`r papaja::apa_print(aov.trust.post)$full_result$gender`) , (`r papaja::apa_print(aov.trust.post)$full_result$education_choice`). Another ANOVA revealed that there was no statistically significant difference on familiarity with knowledge stemming from psychological science on gender (`r papaja::apa_print(aov.familiar)$full_result$gender`), however differences were found on educational level (`r papaja::apa_print(aov.familiar)$full_result$education_choice`). The third ANOVA revealed that no statistically significant difference in surprise about the incentive structure within science was found on gender (`r papaja::apa_print(aov.surprise)$full_result$gender`), however differences were found on educational level once more (`r papaja::apa_print(aov.surprise)$full_result$education_choice`). A final ANOVA revealed that no statistically significant differences were found on agreeance with the statement that tax money should be lowered if no responsibility is taken to resolve the issues mentioned before on gender (`r papaja::apa_print(aov.agreement)$full_result$gender`), however significant differences were found on educational level (`r papaja::apa_print(aov.agreement)$full_result$education_choice`).
+
+## Acceptability and understanding
+
+```{r, echo = F, message = F}
+# Difference pre post / understanding
+understanding.data <- data.filtered %>%
+  select(prolific.pid, starts_with("understanding")) %>%
+  pivot_longer(
+    cols = -prolific.pid,
+    names_to = "topic",
+    values_to = "understanding"
+  ) %>%
+  mutate(topic = topic %>%
+    str_remove("understanding.") %>%
+    str_remove(".post") %>%
+    str_replace("[.]", " ") %>%
+    str_replace("no data", "not sharing data") %>%
+    factor(levels = c(
+      "selective reporting",
+      "publication bias",
+      "not sharing data"
+    )))
+
+accept.understand.data <- full_join(acceptability.data, understanding.data)
+
+# Correlation acceptability and understanding for selecive reporting
+
+temp <- accept.understand.data %>%
+  select(topic, acceptability, understanding) %>%
+  filter(topic == "selective reporting")
+
+cor1.accept.understand <- cor.test(temp$acceptability, temp$understanding)
+rm(temp)
+
+# Correlation acceptability and understanding for publication bias
+
+temp <- accept.understand.data %>%
+  select(topic, acceptability, understanding) %>%
+  filter(topic == "publication bias")
+
+cor2.accept.understand <- cor.test(temp$acceptability, temp$understanding)
+rm(temp)
+
+# Correlation acceptability and understanding for not sharing data
+
+temp <- accept.understand.data %>%
+  select(topic, acceptability, understanding) %>%
+  filter(topic == "not sharing data")
+
+cor3.accept.understand <- cor.test(temp$acceptability, temp$understanding)
+rm(temp)
+
+results <- results %>%
+  add_stats(cor1.accept.understand) %>%
+  add_stats(cor2.accept.understand) %>%
+  add_stats(cor3.accept.understand)
+```
+
+We asked *'given the knowledge you now have about the incentive
+structure in science, how much understanding do you have for scientists
+who selectively report?'* (entirely no understanding - neutral - a lot
+of understanding).
+The correlation between acceptability after reading about the incentive
+structure and understanding for scientists who perform this practice was
+respectively *r*(`r N.after.excl`) = `r sub("^0+", "", (round(cor1.accept.understand$estimate, 2)))`, *p* = `r printp(cor1.accept.understand$p.value)` for
+*selective reporting*, *r*(`r N.after.excl`) =  `r sub("^0+", "", (round(cor2.accept.understand$estimate, 2)))`, *p* = `r printp(cor2.accept.understand$p.value)` for
+*publication bias*, and *r*(`r N.after.excl`) = `r sub("^0+", "", (round(cor3.accept.understand$estimate, 2)))`, *p* = `r printp(cor3.accept.understand$p.value)` for
+*non sharing data*. Results are visualized in Figure 8.
+
+```{r, out.width="100%", message = F, fig.height = 3, echo = F, fig.cap = "Understanding for scientists who perform this practice by acceptability.\\label{fig:understanding}"}
+
+## Create plot
+accept.understand.data %>%
+  select(prolific.pid, topic, time, acceptability, understanding) %>%
+  unique() %>%
+  filter(time == "post") %>%
+  ggplot(aes(x = acceptability, y = understanding)) +
+  geom_point() +
+  geom_smooth(formula = "y~x", method = "lm") +
+  facet_wrap(~topic) +
+  theme_cowplot()+
+  labs(
+    x = "Acceptibility after reading incentive structure",
+    y = "Understanding for scientist"
+  )
+```
+
+As an overview of the main outcomes, figure 9 shows the acceptability ratings of the three practices and agreement
+ratings of whether participants have trust in psychology and whether tax money should be
+lowered if no responsibility for resolving the practices is taken. Important to note is that these visualizations and their interpretation have not been specified in the preregistration of this study, and are therefore purely exploratory. As can be seen, Figure 9 indicates a difference in acceptability pre survey and post survey of selective reporting. There is no indication of a pre and post survey difference for publication bias and not sharing data. Also, Figure 9 indicates a difference in the trust in knowledge stemming from psychological science between pre and post survey.
+
+```{r, out.width = "100%", echo = F, fig.height = 4, fig.cap = "Acceptability ratings of Selective reporting, Publication bias, Not sharing data and agreement ratings of whether participants have trust in psychology and whether tax money should be lowered if no responsibility for resolving the practices is taken,  comparing the \\textcolor{red}{pre-} and \\textcolor{blue}{post-} phases of the survey. \\label{fig:various}", message = F}
+
+# Prepare data
+various.data <- data.filtered %>%
+  select(
+    prolific.pid,
+    starts_with("acceptability"),
+    starts_with("knowledge"),
+    cut.taxes.problems.not.solved
+  ) %>%
+  mutate(cut.taxes.problems.not.solved.pre = -100) %>%
+  rename(cut.taxes.problems.not.solved.post = cut.taxes.problems.not.solved) %>%
+  pivot_longer(-prolific.pid, names_to = "Method", values_to = "Score") %>%
+  mutate(Method = Method %>%
+           str_replace(".pre", "_pre") %>%
+           str_replace(".post", "_post")) %>%
+  separate(col = Method, 
+           into = c("Method", "Time"), 
+           sep = "_", 
+           fill = "right",
+           extra = "merge") %>%
+  mutate(Method = Method %>%
+           str_replace("acceptability.selective.reporting", "accept: SR") %>%
+           str_replace("acceptability.publication.bias", "accept: PB") %>%
+           str_replace("acceptability.no.data", "accept: NSD") %>%
+           str_replace("knowledge.trust", "trust") %>%
+           str_replace("cut.taxes.problems.not.solved", "taxes")) %>%
+  mutate(Method = factor(Method, levels = c("accept: SR",
+                                            "accept: PB",
+                                            "accept: NSD",
+                                            "trust",
+                                            "taxes")),
+         Time = factor(Time, levels = c("pre", "post")),
+         TimeMethod = interaction(Time, Method))
+
+# Create plot of moral acceptability for all practices
+p1 <- various.data %>%
+  filter(str_detect(Method, "accept")) %>%
+  mutate(Method = str_remove(Method, "accept: ")) %>%
+  mutate(Method = factor(Method, levels = c("SR", "PB", "NSD"))) %>%
+  ggplot(aes(x = Score, y = Method, fill = TimeMethod)) +
+  geom_density_ridges(alpha = 0.5, rel_min_height = 0,
+                      from = 0, to = 100) +
+  scale_fill_cyclical(breaks = c("pre.accept: SR", "post.accept: SR"),
+                      labels = c("pre.accept: SR" = "pre",
+                                 "post.accept: SR" = "post"),
+                      values = c("tomato", "dodgerblue")) +
+  scale_x_continuous(breaks = c(0,100),
+                     labels = c("totally \nunacceptable", "totally \nacceptable")) +
+  scale_y_discrete(limits = rev) +
+  xlab("How morally acceptable is: Selective Reporting, Publication Bias, Not Sharing Data?") +
+  ylab("") +
+  theme_cowplot() +
+  theme(legend.position= "none",
+        axis.title = element_text(size = rel(0.75)),
+        axis.text = element_text(size = rel(0.75)))
+
+# Create plot for statement about trust in psychological science and tax money should be lowered 
+p2 <- various.data %>%
+  filter(!str_detect(Method, "accept")) %>%
+  ggplot(aes(x = Score, y = Method, fill = TimeMethod)) +
+  geom_density_ridges(alpha = 0.5, rel_min_height = 0,
+                      from = 0, to = 100) +
+  scale_fill_cyclical(breaks = c("pre.trust", "post.trust"),
+                      labels = c("pre.trust" = "pre",
+                                 "post.trust" = "post"),
+                      values = c("tomato", "dodgerblue")) +
+  scale_x_continuous(breaks = c(0,100),
+                     labels = c("totally \ndisagree", "totally \nagree"))  +
+  scale_y_discrete(limits = rev) +
+  xlab("I trust knowledge stemming from psychological science. \nIf no responsibility is taken to stop practices, tax money to research should be lowered.") +
+  ylab("") +
+  theme_cowplot() +
+  theme(legend.position="none",
+        axis.title = element_text(size = rel(0.75)),
+        axis.text = element_text(size = rel(0.75)))
+plot_grid(p1, p2, ncol = 1)
+```
+
+```{r, relation acceptability difference score and surprise to learn about incentive structure}
+accept.diff.selective.reporting <-
+  (data.filtered$acceptability.selective.reporting.post -
+     data.filtered$acceptability.selective.reporting.pre)
+cor.accept.surprise.selective.reporting <- cor(accept.diff.selective.reporting, data.filtered$surprised.incentive.struc)
+
+accept.diff.publication.bias <-
+  (data.filtered$acceptability.publication.bias.post -
+     data.filtered$acceptability.publication.bias.pre)
+cor.accept.surprise.publication.bias <- cor(accept.diff.publication.bias, data.filtered$surprised.incentive.struc)
+
+accept.diff.no.data <-
+  (data.filtered$acceptability.no.data.post -
+     data.filtered$acceptability.no.data.pre)
+cor.accept.surprise.no.data <- cor(accept.diff.no.data, data.filtered$surprised.incentive.struc)
+```
+
+# Discussion
+
+In the field of psychology, and science in general for that matter, concerns have been raised that several research practices undermine the reliability and integrity of scientific research. Although the opinions of scientists regarding these matters have been frequently evaluated, the opinion of the public has oftentimes been neglected, even though they are the ones that arguably have the most right to the knowledge shares by scientists. In the present study, we assessed the opinion of 114 Dutch participants regarding selectively reporting, publication bias and lack of data sharing with a survey. The survey started with assessing the acceptability of the three practices after the incentive structure in scientific research was explained. After that, the participants were asked how often they thought these practices occur. We found that most participants overestimated the prevalence of selective reporting and underestimated the prevalence of publication bias and lack of data sharing. In addition, the public thought that the three research practices were morally more acceptable when they overestimated the meta scientific prevalence of these practices. We then asked participants who they thought were most responsible for resolving the three practices mentioned. The public thought that the responsibility to resolve the issue of selective reporting was shared equally between universities, scientist, journals and the government. Moreover, The responsibility to resolve the issue of publication bias was mostly that of the journals according to the public. Furthermore, scientists were held most responsible for resolving the issue of data sharing. To conclude the survey we assessed the public opinion on a few general scientific matters not related to the three practices mentioned before. From this assessment we can conclude that this survey negatively impacted the opinion on scientific research in this sample. The participants indicated that after the survey their trust in psychological science had declined, and most thereby thought that tax money should be lowered if no responsibility is taken to resolve the current practices. This last statement is in agreeance with a previous study by Picket & Roch (2018), who found that scientists who commit data fraud or selectively report should be banned from receiving funding. In addition to selective reporting, this study also assessed the public opinion on other major issues in psychological research. This is important in the view of the fact that the public should be aware of the issues present in psychological research, as the public arguably has the largest interest in the knowledge shared by scientists. Although the results found in this study are concerning, they should be interpreted with caution. Although the opinions of 200 members of the public were assessed, 86, or 43% of, members of the public were excluded on the basis of them either incorrectly answering the comprehension questions or reading the page where the incentive structure was explained too fast. This exclusion might be related to the educational level of the participant, given that more than 80% of the remaining sample consisted of participants with an educational level of Higher professional education or University. Even though this is a concern, this pilot study was primarily used to inform us about the clarity of the comprehension questions and their explanations. In addition, this sample consisted of dutch speaking participants currently living in the Netherlands. The public opinion on these practices might be different in the Netherlands as feelings of trust in psychological science and acceptability of these practices might be different. Also, rules and regulations regarding scientific funding in the Netherlands might be different from other countries. To conclude, our study confirms previous findings that the public thinks that scientists who selectively report findings should be punished, and futhermore contributes to a greater understanding of the public opinion on other issues in psychological research. The results of this pilot study point to a compelling need to assess the public opinion on these issues in psychological science in a larger sample, with emphasis on improving comprehension questions and generalization of the public opinion to other countries, in order to stimulate the engagement of the public in scientific research.
+
+\newpage
+
+```{=tex}
+\begingroup
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{0.5in}
+```
+
+## References
+
+::: {#refs custom-style="Bibliography"}
+:::
+
+\endgroup
+
+## Data analysis
+
+We used `r cite_r("r-references.bib")` for all our analyses.
+
+\newpage
+
+# Appendix
+
+## Appendix A: Leave some participants out of the study
+
+In this appendix, we analyse whether participants should be excluded
+given our predefined exclusion criteria. Comprehension questions should all be answered correctly.
+(criteria 1).
+
+We can compare the distributions of the acceptability questions between
+the group who had the comprehension questions correct and incorrect with
+Figure \ref{fig:questions}. We can also compare the distributions of the acceptability questions between the group who took less than 40 seconds to read the page where the scientific incentive structure was explained, and the group who took 40 or more seconds to read that page with Figure 11.
+
+Figure \ref{fig:upset} shows that `r N.after.excl` from the
+`r N.before.excl` have correctly answered all the comprehension
+questions and took enough time (i.e., more than 40 seconds, criteria 2)
+to read about the incentive structure.
+
+
+```{r, out.width = "100%", message = F, fig.height = 3, echo = F, fig.cap = "Comparision between the distributions of acceptability given whether they had the correct answer on the comprehension question(s) for the given practice. \\label{fig:questions}"}
+# Analysis 1
+MorePlotsError <- function(top) {
+  dat <- data.clean %>%
+    select(starts_with("acceptability"), prolific.pid) %>%
+    # Tidy the data
+    pivot_longer(
+      cols = starts_with("acceptability"),
+      names_to = "name",
+      values_to = "acceptability"
+    ) %>%
+    separate(
+      col = "name",
+      into = c("reaction", "topic1", "topic2", "time"),
+      sep = "[.]"
+    ) %>%
+    select(-reaction) %>%
+    unite(col = "topic", starts_with("topic"), sep = " ") %>%
+    pivot_wider(names_from = time, values_from = acceptability) %>%
+    mutate(difference = post - pre) %>%
+    pivot_longer(
+      cols = c("pre", "post"),
+      names_to = "time",
+      values_to = "acceptability"
+    ) %>%
+    mutate(
+      time = factor(time, levels = c("pre", "post")),
+      topic = str_replace(topic, "no data", "not sharing data")
+    ) %>%
+    filter(topic == top)
+
+
+  dat.correct <- data.clean %>%
+    select(prolific.pid, ends_with("correct"))
+
+  first.name <- strsplit(top, " ")[[1]]
+  col.select <- sapply(first.name, function(x) grep(x, colnames(dat.correct)))
+  col.select <- as.numeric(col.select)
+  col.select <- c(1, col.select[!is.na(col.select)])
+
+  dat.correct <- dat.correct[, col.select]
+
+  dat.full <- left_join(dat, dat.correct)
+  colnames(dat.full)[6] <- "filtered"
+  dat.full <- dat.full %>%
+    mutate(filtered = factor(filtered,
+      labels = c("wrong", "correct")
+    ))
+
+  plt <- ggplot(dat.full, aes(x =  reorder(filtered, desc(filtered)), 
+                              y = acceptability, 
+                              fill = time)) +
+    geom_violin() +
+     stat_summary(
+      fun.data = "mean_sdl", 
+      fun.args = list(mult = 1), 
+      geom = "pointrange", 
+      color = "black",
+      fill = "white",
+      shape = 21,
+      show.legend = F) +
+    facet_grid(time ~ topic) +
+    theme_cowplot() +
+    ylim(0, 100) +
+    # Perform the analysis  (paired t-test)
+    theme(
+      legend.position = "none",
+      strip.text.x = element_text(size = 9)
+    ) +
+    labs(
+      x = "",
+      y = ""
+    )
+
+  return(list(plt))
+}
+
+plt.error <- sapply(
+  c(
+    "selective reporting",
+    "publication bias",
+    "not sharing data"
+  ),
+  function(x) {
+    MorePlotsError(x)
+  }
+)
+do.call("grid.arrange", c(plt.error, ncol = 3))
+```
+
+```{r, out.width="100%", echo = F, fig.height = 2.5, fig.cap = "Comparision between the distributions of acceptability given whether they took long enough to read about incentive structure.\\label{fig:time}"}
+MorePlotsTime <- function() {
+  dat <- data.clean %>%
+    select(starts_with("acceptability"), prolific.pid, time.correct) %>%
+    # Tidy the data
+    pivot_longer(
+      cols = starts_with("acceptability"),
+      names_to = "name",
+      values_to = "acceptability"
+    ) %>%
+    separate(
+      col = "name",
+      into = c("reaction", "topic1", "topic2", "time"),
+      sep = "[.]"
+    ) %>%
+    select(-reaction) %>%
+    unite(col = "topic", starts_with("topic"), sep = " ") %>%
+    pivot_wider(names_from = time, values_from = acceptability) %>%
+    mutate(difference = post - pre) %>%
+    pivot_longer(
+      cols = c("pre", "post"),
+      names_to = "time",
+      values_to = "acceptability"
+    ) %>%
+    mutate(
+      time = factor(time, levels = c("pre", "post")),
+      topic = str_replace(topic, "no data", "not sharing data")
+    ) %>%
+    mutate(time.correct = factor(time.correct,
+      labels = c("< 40 sec", "> 40 sec")
+    ))
+
+  ggplot(dat, aes(x = time.correct, y = acceptability, fill = time)) +
+    geom_violin() +
+     stat_summary(
+      fun.data = "mean_sdl", 
+      fun.args = list(mult = 1), 
+      geom = "pointrange", 
+      color = "black",
+      fill = "white",
+      shape = 21,
+      show.legend = F) +
+    facet_grid(time ~ topic) +
+    theme_cowplot() +
+    ylim(0, 100) +
+    # Perform the analysis  (paired t-test)
+    theme(legend.position = "none") +
+    labs(
+      x = "",
+      y = ""
+    )
+}
+
+MorePlotsTime()
+```
+
+```{r, out.width = "100%", echo = F, fig.height = 4, fig.cap = "Upset plot of the combinations of conditions that participants did fulfill. SR = Selective Reporting ; PB = Publication Bias ; NSD = Not Sharing Data ; Time = fulfilled > 40s. \\label{fig:upset}"}
+
+# Upset Plot
+sets <- data.clean %>%
+  select(selective.correct, publication.correct, sharing.correct, time.correct) %>%
+  rename(
+    "SR" = selective.correct,
+    "PB" = publication.correct,
+    "NSD" = sharing.correct,
+    "Time" = time.correct
+  ) 
+
+sets %>% 
+  as.data.frame() %>% 
+  lapply(.,as.numeric) %>% 
+  as.data.frame() %>%
+upset(., 
+      point.size = 3.5, 
+      line.size = 2.0, 
+      text.scale = 1.5,
+      mainbar.y.label = "Number of Participants", 
+      sets.x.label = "Total Paricipants",
+      sets.bar.color = c("#00B0F6", "#00BF7D", "#A3A500", "#F8766D"),
+      order.by = "freq", 
+      query.legend = "bottom", 
+      queries = list(
+        list(
+          query = intersects,
+          params = list("Time", "SR", "NSD", "PB"),
+          color = "#E76BF3",
+          active = T,
+          query.name = "Participants that fulfilled all conditions"
+        )
+      )
+)
+```
+
+\newpage
+
+## Appendix B: Leave-one-out Analysis
+
+In this Appendix, we have performed some leave-one-out analyses to
+verify the robustness of the analysis. With the
+leave-one-out analysis, we fitted the models on every data point except
+one and computed the $p$-values to see if large differences occur. In
+Figure \ref{fig:LOO_acceptability}, \ref{fig:LOO_responsibility} and
+\ref{fig:LOO_trust}, we plotted a histogram of the $p$-values for each
+analysis and practice. In red, we plotted the original $p$-value. As can
+be seen from these plots, if we were to make a binary judgement of
+significance status, all the LOO-analyses were significant when the
+original analysis was significant and all the LOO-analysis were
+non-significant when the original analysis was non-significant, which
+speaks to the robustness of the results reported in main text.
+
+```{r, out.width = "100%", echo = F, fig.height = 3, fig.cap = "Histogram of the leave-one-out analysis of acceptability with respect to the p-values in the t-tests.\\label{fig:LOO_acceptability}"}
+## Compute LOO analysis Acceptability
+ComputeAcceptabilityLOO <- function(data) {
+  ComputeGroupData <- function(data, top) {
+    dat <- data %>%
+      filter(topic == top) %>%
+      select(prolific.pid, time, acceptability) %>%
+      pivot_wider(names_from = time, values_from = acceptability) %>%
+      select(-prolific.pid)
+    return(dat)
+  }
+
+  ApplyLOO <- function(data) {
+    p.vals <- numeric(nrow(data))
+    for (i in 1:nrow(data)) {
+      dat <- data[-i, ]
+      p.vals[i] <- t.test(dat$pre, dat$post, paired = T)$p.value
+    }
+    return(p.vals)
+  }
+
+  lst <- sapply(levels(data$topic), function(top) {
+    dat <- ComputeGroupData(data, top)
+    p.vals <- ApplyLOO(dat)
+    return(p.vals)
+  })
+
+  return(lst)
+}
+
+loo.acceptability <- ComputeAcceptabilityLOO(acceptability.data) %>%
+  as_tibble() %>%
+  pivot_longer(cols = everything(), names_to = "topic", values_to = "pval") %>%
+  mutate("topic" = factor(topic, levels = c(
+    "selective reporting",
+    "publication bias",
+    "not sharing data"
+  )))
+
+my.pvals <- tibble(
+  topic = factor(levels(loo.acceptability$topic),
+    levels = levels(loo.acceptability$topic)
+  ),
+  pvals = sapply(results[1:3], function(x) {
+    vec <- x$statistics$p
+    return(vec)
+  })
+)
+loo.acceptability %>%
+  ggplot(aes(x = pval)) +
+  geom_histogram(bins = 30) +
+  geom_vline(data = my.pvals, aes(xintercept = pvals), col = "red") +
+  scale_x_continuous(breaks = pretty_breaks()) +
+  facet_wrap(~topic, scales = "free_x") +
+  theme_cowplot() +
+  labs(x = "p-value with LOO-CV") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+
+rm(my.pvals)
+```
+
+```{r, out.width="100%", echo = F, fig.height = 3, fig.cap = "Histogram of the leave-one-out analysis of responsibility with respect to the p-values in the t-tests.\\label{fig:LOO_responsibility}"}
+# Compute LOO of responsibility analysis
+ComputeResponsibilityLOO <- function(data) {
+  ComputeGroupData <- function(data, top) {
+    dat <- data %>%
+      select(response.id, topic, institute, responsibility) %>%
+      filter(topic == top) %>%
+      select(-topic)
+
+    return(dat)
+  }
+
+  ApplyLOO <- function(data) {
+    ids <- unique(data$response.id)
+    n <- length(ids)
+    p.vals <- numeric(n)
+    for (i in 1:n) {
+      dat <- data %>% filter(response.id != ids[i])
+      aov.model <- aov(responsibility ~ institute, data = dat)
+      aov.summ <- summary(aov.model)
+      temp <- aov.summ[[1]]["Pr(>F)"][1]
+      names(temp) <- NULL
+      p.vals[i] <- unlist(temp)[1]
+    }
+    return(p.vals)
+  }
+
+  lst <- sapply(levels(data$topic), function(top) {
+    dat <- ComputeGroupData(data, top)
+    p.vals <- ApplyLOO(dat)
+    return(p.vals)
+  })
+
+  return(lst)
+}
+
+loo.responsibility <- ComputeResponsibilityLOO(responsibility.data) %>%
+  as_tibble() %>%
+  pivot_longer(cols = everything(), names_to = "topic", values_to = "pval") %>%
+  mutate(topic = factor(topic, levels = c(
+    "selective reporting",
+    "publication bias",
+    "not sharing data"
+  )))
+
+my.pvals <- tibble(
+  topic = factor(levels(loo.acceptability$topic),
+    levels = levels(loo.acceptability$topic)
+  ),
+  pvals = sapply(results[4:6], function(x) {
+    vec <- x[[2]][[1]]$statistics$p
+    return(vec)
+  })
+)
+
+loo.responsibility %>%
+  ggplot(aes(x = pval)) +
+  geom_histogram(bins = 30) +
+  geom_vline(data = my.pvals, aes(xintercept = pvals), col = "red") +
+  facet_wrap(~topic, scales = "free_x") +
+  labs(x = "p-value with LOO-CV") +
+  scale_x_continuous(breaks = pretty_breaks()) +
+  theme_cowplot() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+
+rm(my.pvals)
+```
+
+```{r, out.width="100%", echo = F, fig.height = 3, fig.cap = "Histogram of the leave-one-out analysis of trust in pyschology with respect to the p-values in the t-tests.\\label{fig:LOO_trust}"}
+# Compute LOO Trust
+ComputeTrustLOO <- function(data) {
+  temp <- data %>%
+    select(response.id, time, trust) %>%
+    pivot_wider(names_from = time, values_from = trust)
+
+  ApplyLOO <- function(data) {
+    p.vals <- numeric(nrow(data))
+    for (i in 1:nrow(data)) {
+      dat <- data[-i, ]
+      p.vals[i] <- t.test(dat$pre, dat$post, paired = T)$p.value
+    }
+    return(p.vals)
+  }
+
+  dat <- tibble(pval = ApplyLOO(temp))
+  return(dat)
+}
+
+ggplot(ComputeTrustLOO(trust.data), aes(x = pval)) +
+  geom_histogram(bins = 30) +
+  labs(x = "p-value with LOO-CV") +
+  scale_x_continuous(breaks = pretty_breaks()) +
+  theme_cowplot() +
+  geom_vline(aes(xintercept = results$t1.trust$statistics$p), color = "red") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+```
+
+\newpage
+
+## Appendix C: correlations between all stakeholder for respectively *selective reporting*, *publication bias* and *not sharing data*.
+
+`r responsibility.corr.SR.APA`
+`r responsibility.corr.PB.APA`
+
+
+\newpage
+
+`r responsibility.corr.NSD.APA`
